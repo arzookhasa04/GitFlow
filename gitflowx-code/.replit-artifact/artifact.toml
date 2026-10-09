@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "GitFlowX"
+description = "A polished browser-only educational simulator that makes repositories, commits, branches, diffs, merges, and DSA concepts visible and interactive for learners."
+version = "1.0.0"
+id = "artifacts/gitflowx"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18996
+
+[services.development]
+run = "pnpm --filter @workspace/gitflowx run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gitflowx", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gitflowx/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18996"
+BASE_PATH = "/"
